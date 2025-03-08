@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <section class="product-details spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="product__details__pic">
+                        <div class="product__details__pic__item">
+                            <img class="product__details__pic__item--large"
+                                src="{{product.prod_image_url}}" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="product__details__text">
+                        <h3>{{product.name}}</h3>
+                        <div class="product__details__price">{{product.price}} THB</div>
+                        <p>{{product.desc}}</p>
+                        <a class="primary-btn" type="button" id="add_to_cart" value="{{product.prod_id}}">ADD TO CART</a>
+                        <a type="button" class="heart-icon" id="add_to_wishlist" value="{{product.prod_id}}">
+                            <span class="icon_heart_alt"></span>
+                        </a>
+                        <ul>
+                            <li><b>Availability</b> <span>{{product.quantity}}</span></li>
+                            <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
+                            <li><b>Seller</b> <span>{{product.seller}}</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="product__details__tab">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
+                                    aria-selected="false">Reviews <span>({{reviews|length}})</span></a>
+                            </li>
+                        </ul>
+                        <div class="tab-pane" id="tabs-3" role="tabpanel">
+                            <div class="product__details__tab__desc">
+                                <h6>Reviews</h6>
+                                {% for review in reviews %}
+                                <p>{{review.comment}} | Rating: {{review.rating}}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Product Details Section End -->
+
+    <script>
+        document.getElementById('add_to_cart').addEventListener('click', function(e) {
+            e.preventDefault();
+            const prodId = this.getAttribute('value');
+            
+            fetch('{% url "cart_add" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({
+                    'prod_id': prodId,
+                    'csrfmiddlewaretoken': getCookie('csrftoken')
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.status === 'success') {
+                    alert('Product added to cart!');
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            });
+        });
+
+        // Add wishlist functionality
+        document.getElementById('add_to_wishlist').addEventListener('click', function(e) {
+            e.preventDefault();
+            const prodId = this.getAttribute('value');
+            
+            fetch('{% url "add_to_wishlist" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({
+                    'prod_id': prodId,
+                    'csrfmiddlewaretoken': getCookie('csrftoken')
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.status === 'success') {
+                    alert('Product added to wishlist!');
+                    // Optional: Change heart icon to filled
+                    this.querySelector('.icon_heart_alt').classList.add('active');
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            });
+        });
+
+        // Helper function to get CSRF token
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+{% endblock %}

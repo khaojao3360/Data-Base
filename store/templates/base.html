@@ -1,0 +1,157 @@
+        {% load static %}
+        {% include 'nav_bar.html' %}
+        <!DOCTYPE html>
+        <html lang="zxx">
+
+        <head>
+            <meta charset="UTF-8">
+            <meta name="description" content="Ogani Template">
+            <meta name="keywords" content="Ogani, unica, creative, html">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <title>Ogani | Template</title>
+        
+            <!-- Google Font -->
+            <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+        
+            <!-- Css Styles -->
+            <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}" type="text/css">
+            <link rel="stylesheet" href="{% static 'css/font-awesome.min.css'%}" type="text/css">
+            <link rel="stylesheet" href="{% static 'css/elegant-icons.css'%}" type="text/css">
+            <link rel="stylesheet" href="{% static 'css/nice-select.css'%}" type="text/css">
+            <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css'%}" type="text/css">
+            <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css'%}" type="text/css">
+            <link rel="stylesheet" href="{% static 'css/slicknav.min.css'%}" type="text/css">
+            <link rel="stylesheet" href="{% static 'css/style.css'%}" type="text/css">
+            <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        </head>
+
+        <body>
+            <!-- Page Preloder -->
+            <div id="preloder">
+                <div class="loader"></div>
+            </div>
+
+        <!-- Hero Section Begin -->
+        <section class="hero">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="hero__categories">
+                            <div class="hero__categories__all">
+                                <i class="fa fa-bars"></i>
+                                <span>All departments</span>
+                            </div>
+                            <ul style="display: none; position: absolute; background: white; width: 100%; z-index: 1000;">
+                                {% for category in categories%}
+                                <li><a href="{% url 'product_categories' category.cat_id %}">{{category.name}}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="hero__search">
+                            <div class="hero__search__form">
+                                <form action="#">
+                                    <input type="text" placeholder="What do yo u need?">
+                                    <button type="submit" class="site-btn">SEARCH</button>
+                                </form>
+                            </div>
+                            <div class="hero__search__phone">
+                                <div class="hero__search__phone__icon" style="display: flex; align-items: center; justify-content: center;">
+                                    <i class="fa fa-phone"></i>
+                                </div>
+                                <div class="hero__search__phone__text">
+                                    <h5>02-410-6932</h5>
+                                    <span>support 24/7 time</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+        {% block content %}
+        {%if message%}
+            {%for messages in messages%}
+                <div class="alert alert-{{message.tags}}">
+                    {{message}}
+                </div>
+            {%endfor%}
+        {%endif%}
+        {% endblock %}
+
+        <!-- Footer Section Begin -->
+        <footer class="footer spad">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="footer__about">
+                            <div class="footer__about__logo">
+                                <a href="{% url 'home' %}"><img src="{% static 'img/logo.png' %}" alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
+                        <div class="footer__widget">
+                            <h6>Useful Links</h6>
+                            <ul>
+                                <li><a>Waranyou </a></li>
+                                <li><a>Shothibutr</a></li>
+                                <li><a>Sitthikorn</a></li>
+                                <li><a>Yanisa</a></li>
+                                <li><a>Natawat</a></li>
+                                <li><a>Thitaya</a></li>
+                            </ul>
+                            <ul>
+                                <li><a>Khianthong 6405063</a></li>
+                                <li><a>Tansiri 6405203</a></li>
+                                <li><a>Rujisin 6405373</a></li>
+                                <li><a>Khamsiri 6505070</a></li>
+                                <li><a>Phokaew 6505074</a></li>
+                                <li><a>Khampala 6505196</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12">
+                        <div class="footer__widget">
+                            <h6>Join Our Newsletter Now</h6>
+                            <p>Get E-mail updates about our latest shop and special offers.</p>
+                            <form action="#">
+                                <input type="text" placeholder="Enter your mail">
+                                <button type="submit" class="site-btn">Subscribe</button>
+                            </form>
+                            <div class="footer__widget__social">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-instagram"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-pinterest"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="footer__copyright">
+                            <div class="footer__copyright__text"><p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p></div>
+                            <div class="footer__copyright__payment"><img src="static/img/payment-item.png" alt=""></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Footer Section End -->
+
+        <!-- Js Plugins -->
+        <script src="{% static 'js/jquery-3.3.1.min.js'%}"></script>
+        <script src="{% static 'js/bootstrap.min.js'%}"></script>
+        <script src="{% static 'js/jquery.nice-select.min.js'%}"></script>
+        <script src="{% static 'js/jquery-ui.min.js'%}"></script>
+        <script src="{% static 'js/jquery.slicknav.js'%}"></script>
+        <script src="{% static 'js/mixitup.min.js'%}"></script>
+        <script src="{% static 'js/owl.carousel.min.js'%}"></script>
+        <script src="{% static 'js/main.js'%}"></script>
+    </body>
+
+    </html>

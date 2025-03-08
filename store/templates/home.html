@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+                        <div class="hero__item set-bg" data-setbg="static/img/hero/banner.jpg">
+                            <div class="hero__text">
+                                <span>SHOP EVERY DAY WITH</span>
+                                <h2>Shopmee <br />Save your wallet</h2>
+                                <p>Free Delivery and Promotion Available</p>
+                                <a href="{%url 'shop_grid'%}" class="primary-btn">SHOP NOW</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Hero Section End -->
+    <!-- Categories Section Begin -->
+    <section class="categories">
+        <div class="container">
+            <div class="row">
+                <div class="categories__slider owl-carousel">
+                    {% for category in categories%}    
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="{{category.cat_image_url}}">
+                            <h5><a href="{%url 'product_categories' category.cat_id%}">{{category.name}}</a></h5>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Categories Section End -->
+
+    <!-- Featured Section Begin -->
+    <section class="featured spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <h2>Featured Product</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row featured__filter">
+                {% for product in products %}
+                    {% if forloop.counter <= 8 %}
+                        <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
+                        <div class="featured__item">
+                            <div class="featured__item__pic set-bg" data-setbg="{{product.prod_image_url}}">
+                            </div>
+                            <div class="featured__item__text">
+                            <h6><a href="{%url 'product_detail' product.prod_id %}">{{product.name }}</a></h6>
+                            </div>
+                        </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- Featured Section End -->
+{% endblock %}                 
+
+
+

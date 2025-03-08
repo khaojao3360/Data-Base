@@ -1,0 +1,80 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Toggle</title>
+  <link rel="stylesheet" href="{% static 'style.css'%}">
+</head>
+<body>
+  <div class="container">
+    <input type="checkbox" id="check">
+    <input type="checkbox" id="afterCheck">
+    <div class="login form">
+      <header>Login</header>
+      <form method="post" action="{% url 'login'%}">
+        {%csrf_token%}
+        <input type="text" placeholder="Enter your username", name="username">
+        <input type="password" placeholder="Enter your password", name="password">
+        {% if messages %}
+          {% for message in messages %}
+            <p class="error-message">{{ message }}</p>
+          {% endfor %}
+        {% endif %}
+        <input type="submit" class="button" value="Login" name="action">
+      </form>
+      <div class="signup">
+        <span class="signup">Don't have an account?
+          <label for="check">Signup</label>
+        </span>
+      </div>
+    </div>
+    <div class="registration form">
+      <header>Signup</header>
+      <form method="post" action="{%url 'login'%}">
+        {%csrf_token%}
+        <input type="email" placeholder="Enter your email" name="email">
+        <input type="username" placeholder="Create a username" name="username">
+        <input type="password" placeholder="Create a password" name="password1">
+        <input type="password" placeholder="Confirm your password" name="password2">
+        <input type="button" id="nextStepButton" class="button" value="Next Step">
+      <!-- </form> -->
+      <div class="signup">
+        <span class="signup">Already have an account?
+          <label for="check">Login</label>
+        </span>
+      </div>
+    </div>
+    <div class="after-registration form">
+      <header>Signup</header>
+      <!-- <form method="post" action="{%url 'login'%}">
+        {%csrf_token%} -->
+        <input type="text" placeholder="First name" name="firstname">
+        <input type="text" placeholder="Last name" name="lastname">
+        <input type="date" placeholder="Date of Birth" name="dob">
+        <input type="tel" placeholder="Phone Number" name="phonenum">
+        <input type="submit" class="button" value="Sign Up" name="action">
+      </form>
+      <div class="signup">
+        <span class="signup">Already have an account?
+          <label for="loginCheck">Login</label>
+        </span>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.getElementById('nextStepButton').addEventListener('click', function() {
+      document.getElementById('afterCheck').checked = true;
+    });
+
+    document.querySelectorAll('label[for="loginCheck"]').forEach(function(label) {
+      label.addEventListener('click', function() {
+        document.getElementById('check').checked = false;
+        document.getElementById('afterCheck').checked = false;
+      });
+    });
+  </script>
+</body>
+</html>
